@@ -1,5 +1,6 @@
 # dotfiles
 
+```zsh
 git clone git@github.com:mazzoccantelorenzo/dotfiles.git ~/dotfiles
 
 ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
