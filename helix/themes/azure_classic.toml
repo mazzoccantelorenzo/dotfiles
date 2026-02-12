@@ -1,0 +1,27 @@
+# ~/.config/helix/themes/azure_classic.toml
+
+# --- Sintassi (TUTTO IN GRASSETTO) ---
+"type" = { fg = "#66ccff", modifiers = ["bold"] }        # Ciano chiaro
+"function" = { fg = "#ffcc00", modifiers = ["bold"] }    # Giallo
+"constant" = { fg = "#ff99cc", modifiers = ["bold"] }    # Rosa chiaro
+"string" = { fg = "#aaffaa", modifiers = ["bold"] }      # Verde chiaro
+"keyword" = { fg = "#ffffff", modifiers = ["bold"] }     # Bianco puro
+"variable" = { fg = "#eeeeee", modifiers = ["bold"] }    # Grigio quasi bianco
+"comment" = { fg = "#88b0d0", modifiers = ["italic"] }   # I commenti restano solo in corsivo
+
+# --- UI (Sfondo Azzurro e Testo GRASSETTO) ---
+"ui.background" = { bg = "#003366" }
+"ui.text" = { fg = "#ffffff", modifiers = ["bold"] }     # Testo base grassetto
+
+"ui.cursor" = { fg = "#003366", bg = "#ffffff" }
+"ui.cursor.match" = { fg = "#003366", bg = "#ffff00" }
+
+"ui.linenr" = { fg = "#6699cc", modifiers = ["bold"] }
+"ui.linenr.selected" = { fg = "#ffffff", modifiers = ["bold"] }
+
+"ui.statusline" = { fg = "#ffffff", bg = "#002244", modifiers = ["bold"] }
+"ui.statusline.inactive" = { fg = "#aaaaaa", bg = "#002244" }
+
+"ui.selection" = { bg = "#005599" }
+"ui.menu" = { fg = "#ffffff", bg = "#002244", modifiers = ["bold"] }
+"ui.menu.selected" = { fg = "#ffffff", bg = "#005599", modifiers = ["bold"] }

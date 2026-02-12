@@ -79,6 +79,17 @@ plugins=(
   zsh-syntax-highlighting
 )
 
+export PATH=$PATH:$(go env GOPATH)/bin 
+
+# Se direnv è installato, carica direnv
+if command -v direnv >/dev/null 2>&1; then
+    eval "$(direnv hook zsh)"
+    # opzionale: auto-allow per i progetti già trusted
+    if [[ -f .envrc ]]; then
+        direnv allow
+    fi
+fi
+
 
 source $ZSH/oh-my-zsh.sh
 eval "$(starship init zsh)"

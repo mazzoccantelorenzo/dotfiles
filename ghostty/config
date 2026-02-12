@@ -47,6 +47,8 @@
 # # which is explained in the docs for that config option.
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
-font-family = JetBrainsMono Nerd Font
-font-size = 18
-
+font-family = MesloLGM NF Regular
+font-size = 24
+command = "/bin/zsh"
+click-repeat-interval = 500
+auto-update-channel = "stable"
