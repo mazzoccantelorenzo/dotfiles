@@ -1,7 +1,7 @@
 # dotfiles
 
 ```zsh
-git clone git@github.com:mazzoccantelorenzo/dotfiles.git ~/dotfiles
+git clone https://github.com/mazzoccantelorenzo/dotfiles.git ~/dotfiles
 
 ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
 ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
