@@ -1,5 +1,4 @@
-[language-server.gopls]
-command = "gopls"
-args = ["-logfile=/tmp/gopls.log",  "serve"]
-[language-server.gopls.config]
-"ui.diagnostic.staticcheck" = true
+[[language]]
+name = "go"
+language-servers = ["gopls"]
+
