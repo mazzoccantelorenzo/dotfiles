@@ -28,6 +28,13 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup plugins
 require("lazy").setup({
+	{
+    "tpope/vim-fugitive",
+    config = function()
+      -- Fugitive basic keymaps
+      vim.keymap.set("n", "<leader>gs", vim.cmd.Git, { desc = "Git Status" })
+    end
+  },
   -- Telescope
   {
     'nvim-telescope/telescope.nvim',
