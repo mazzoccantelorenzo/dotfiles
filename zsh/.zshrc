@@ -93,7 +93,7 @@ fi
 
 source $ZSH/oh-my-zsh.sh
 eval "$(starship init zsh)"
-
+alias gdbr='git fetch --prune && git branch -vv | grep '\'': gone]'\'' | awk '\''{print $1}'\'' | xargs git branch -D'
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
