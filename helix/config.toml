@@ -1,0 +1,20 @@
+ 
+theme = "onedark"
+
+[keys.normal]
+"C-right" = "move_next_word_end"
+"C-left"  = "move_prev_word_start"
+
+[keys.insert]
+"C-right" = "move_next_word_end"
+"C-left"  = "move_prev_word_start"
+
+
+
+
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
