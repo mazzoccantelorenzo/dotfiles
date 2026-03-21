@@ -13,8 +13,20 @@ vim.opt.shiftwidth = 4            -- Spazi auto-indent
 vim.opt.clipboard = "unnamedplus" -- Sincronizza clipboard di sistema
 vim.opt.termguicolors = true
 vim.opt.number = true             -- Numeri di riga assoluti
-
 -- Disabilita netrw per nvim-tree
+-- Spostamento a sinistra di una parola con 'q'
+vim.keymap.set({ 'n', 'v' }, 'q', 'b', { noremap = true })
+
+-- Fine riga con Ctrl + e (Normal, Insert, Visual)
+vim.keymap.set('n', '<C-e>', '$', { noremap = true })
+vim.keymap.set('i', '<C-e>', '<Esc>A', { noremap = true })
+vim.keymap.set('v', '<C-e>', '$', { noremap = true })
+vim.keymap.set("v", ">", ">gv")
+vim.keymap.set("v", "<", "<gv")
+-- Inizio riga con Ctrl + q (Normal, Insert, Visual)
+vim.keymap.set('n', '<C-q>', '0', { noremap = true })
+vim.keymap.set('i', '<C-q>', '<Esc>I', { noremap = true })
+vim.keymap.set('v', '<C-q>', '0', { noremap = true })
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
@@ -48,7 +60,7 @@ vim.opt.rtp:prepend(lazypath)
 -- ========================================================================== --
 -- Go: Organize imports and format on save
 vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*.go",
+	pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
 	callback = function()
 		local params = vim.lsp.util.make_range_params()
 		params.context = { only = { "source.organizeImports" } }
