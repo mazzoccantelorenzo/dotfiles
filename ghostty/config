@@ -47,18 +47,12 @@
 # # which is explained in the docs for that config option.
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
-font-family = "Nimbus Mono PS"
+font-family = "Ubuntu Sans Mono"
 font-size = 12
 command = "/bin/zsh"
 click-repeat-interval = 500
 auto-update-channel = "stable"
 keybind = ctrl+c=copy_to_clipboard
 keybind = ctrl+v=paste_from_clipboard
-font-family = "Nimbus Mono PS"
-font-family = "Nimbus Mono PS"
-font-family = "Nimbus Mono PS"
-font-family = "Nimbus Mono PS"
-font-family = "Nimbus Mono PS"
-font-family = "Nimbus Mono PS"
-font-family = "Nimbus Mono PS"
-font-family = "Nimbus Mono PS"
+keybind = alt+d=goto_split:next
+keybind = alt+a=goto_split:previous
