@@ -157,7 +157,21 @@ require("lazy").setup({
             })
         end,
     },
-    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate', config = function() require("nvim-treesitter.configs").setup({ ensure_installed = { 'lua', 'go', 'typescript' }, highlight = { enable = true } }) end },
+    {
+        'nvim-treesitter/nvim-treesitter',
+        build = ':TSUpdate',
+        config = function()
+            local status, configs = pcall(require, "nvim-treesitter.configs")
+            if not status then
+                configs = require("nvim-treesitter")
+            end
+            configs.setup({
+                ensure_installed = { 'lua', 'go', 'typescript', 'javascript', 'html', 'bash' },
+                highlight = { enable = true },
+                indent = { enable = true },
+            })
+        end
+    },
 
     -- Git
     { "lewis6991/gitsigns.nvim", opts = { current_line_blame = true } },
