@@ -109,8 +109,22 @@ require("lazy").setup({
 
             vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find Files' })
             vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Live Grep' })
+            vim.keymap.set('n', '<leader>fW', function()
+                builtin.live_grep({ additional_args = function() return { "-F" } end })
+            end, { desc = 'Live Grep (Literal)' })
             vim.keymap.set('n', '<leader>fc', function() builtin.colorscheme({ enable_preview = true }) end, { desc = 'Colorscheme Preview' })
         end
+    },
+    { "folke/trouble.nvim", opts = {}, cmd = "Trouble", keys = { { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics" } } },
+    { "sindrets/diffview.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
+    { "tiagovla/scope.nvim", config = function() require("scope").setup({}) end },
+    {
+        "stevearc/conform.nvim",
+        keys = { { "<leader>f", function() require("conform").format({ async = true, lsp_format = "fallback" }) end, desc = "Format buffer" } },
+        opts = {
+            formatters_by_ft = { javascript = { "prettier" }, typescript = { "prettier" }, json = { "prettier" }, html = { "prettier" }, css = { "prettier" } },
+            format_on_save = { timeout_ms = 5000, lsp_format = "fallback" },
+        },
     },
     { "folke/flash.nvim", event = "VeryLazy", opts = {}, keys = { { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" } } },
 
