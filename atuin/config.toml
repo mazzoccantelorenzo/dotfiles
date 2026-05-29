@@ -1,0 +1,58 @@
+search_mode = "fuzzy"                           # Search algorithm: prefix, fulltext, fuzzy, skim
+filter_mode = "directory"                       # Default scope: global, host, session, directory
+filter_mode_shell_up_key_binding = "directory"  # Scope when using up-arrow (same options as filter_mode)
+workspaces = true                               # Auto-filter to git repo when in one
+
+style = "compact"                               # UI style: auto, full, compact
+inline_height = 15                              # Max lines for TUI (0 = fullscreen)
+max_preview_height = 8                          # Max lines for command preview
+show_preview = true                             # Show preview of selected command
+show_help = true                                # Show help row with version/keymap hints
+show_tabs = true                                # Show tabs for search and inspect
+invert = false                                  # Put search bar at top instead of bottom
+prefers_reduced_motion = false                  # Disable live timers/animations
+
+enter_accept = true                             # Enter executes immediately (Tab to edit first)
+exit_mode = "return-original"                   # On Esc: return-original or return-query
+keymap_mode = "auto"                            # Keymap: auto, emacs, vim-insert, vim-normal
+word_jump_mode = "emacs"                        # Word navigation: emacs or subl
+ctrl_n_shortcuts = false                        # Use Ctrl-0..9 instead of Alt-0..9
+command_chaining = true                         # After && || |, chain instead of replacing the line
+
+secrets_filter = true                           # Auto-filter AWS keys, GitHub PATs, Slack tokens, etc.
+
+cwd_filter = [
+  "^/tmp",                                      # Temporary directories
+  ".*/.git/hooks",                              # Git hooks (often sensitive)
+  ".*/node_modules",                            # Node modules
+  ".*/\\.env",                                  # Dotenv directories
+]
+
+auto_sync = true                                # Sync automatically when logged in
+sync_frequency = "5m"                           # How often to sync (0 = after every command)
+update_check = true                             # Check for Atuin updates
+
+[stats]
+common_subcommands = [                          # Track subcommands for these (e.g., "git status" vs "git")
+  "git", "docker", "kubectl", "npm", "yarn", "pnpm",
+  "cargo", "go", "make", "brew", "pip", "poetry",
+  "terraform", "aws", "gcloud", "az", "helm",
+  "tmux", "systemctl", "journalctl", "nix", "claude",
+]
+
+common_prefix = ["sudo", "time", "nohup"]       # Strip these prefixes from stats
+
+ignored_commands = [                            # Ignore these from stats entirely
+  "ls", "cd", "pwd", "clear", "exit", "history",
+  "ll", "la", "l", "which", "man", "help", "echo",
+]
+
+[keys]
+scroll_exits = true                             # Up/down exits TUI at first/last entry
+
+[preview]
+strategy = "auto"                               # Preview height: auto (based on command) or static
+
+[daemon]
+enabled = false                                 # Run `atuin daemon` for background sync
+sync_frequency = 300                            # Daemon sync interval in seconds

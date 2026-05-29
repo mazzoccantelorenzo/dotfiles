@@ -47,7 +47,7 @@
 # # which is explained in the docs for that config option.
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
-font-family = "Ubuntu Sans Mono"
+font-family = "JetBrainsMono Nerd Font"
 font-size = 12
 command = "/bin/zsh"
 click-repeat-interval = 500
