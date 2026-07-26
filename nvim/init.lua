@@ -150,7 +150,7 @@ require("lazy").setup({
             vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find Files' })
             vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Live Grep' })
             vim.keymap.set('n', '<leader>fW', function()
-                builtin.live_grep({ additional_args = function() return { "-F" } end })
+                builtin.live_grep({ additional_args = function() return { "-F", "-i" } end })
             end, { desc = 'Live Grep (Literal)' })
             
         end
@@ -245,6 +245,14 @@ require("lazy").setup({
     -- Utils
     { "folke/which-key.nvim", event = "VeryLazy", opts = {} },
     { "max397574/better-escape.nvim", config = function() require("better_escape").setup() end },
+    {
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {},
+        keys = {
+            { "<leader>ft", "<cmd>TodoTelescope<cr>", desc = "Find TODOs" },
+        }
+    },
 })
 
 -- ========================================================================== --
@@ -260,5 +268,14 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = { "*.go", "*.ts", "*.tsx", "*.js", "*.jsx" },
     callback = function()
         vim.lsp.buf.format({ async = false })
+    end,
+})
+
+-- Git commit message line length limit (72 chars) and spell check
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "gitcommit",
+    callback = function()
+        vim.opt_local.textwidth = 72
+        vim.opt_local.spell = true
     end,
 })
