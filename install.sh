@@ -86,4 +86,11 @@ safe_link "$DOTFILES/starship/starship.toml" "$HOME/.config/starship.toml"
 # Zsh: Primary interactive shell
 safe_link "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
 
+# --- macOS Specific Settings ---
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "Applying macOS keyboard settings (fast key repeat)..."
+    defaults write -g InitialKeyRepeat -int 10
+    defaults write -g KeyRepeat -int 1
+fi
+
 echo "Dotfiles installation complete!"
