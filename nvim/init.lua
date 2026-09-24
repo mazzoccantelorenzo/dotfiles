@@ -99,6 +99,12 @@ require("lazy").setup({
         end,
     },
     { "folke/tokyonight.nvim" },
+	-- lazy.nvim
+{
+    "catgoose/nvim-colorizer.lua",
+    event = "BufReadPre",
+    opts = {},
+},
     { "rebelot/kanagawa.nvim" },
     { "rose-pine/neovim", name = "rose-pine" },
     { "EdenEast/nightfox.nvim" },
@@ -243,6 +249,22 @@ require("lazy").setup({
     { "kdheepak/lazygit.nvim", keys = { { "<leader>lg", "<cmd>LazyGit<cr>" } } },
 
     -- Utils
+    {
+        "vhyrro/luarocks.nvim",
+        priority = 1000,
+        config = true,
+    },
+    {
+        "3rd/image.nvim",
+        dependencies = { "luarocks.nvim" },
+        opts = {
+            backend = "kitty",
+            max_width = 100,
+            max_height = 20,
+            max_width_window_percentage = 100,
+            max_height_window_percentage = 100,
+        }
+    },
     { "folke/which-key.nvim", event = "VeryLazy", opts = {} },
     { "max397574/better-escape.nvim", config = function() require("better_escape").setup() end },
     {
@@ -279,3 +301,4 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt_local.spell = true
     end,
 })
+vim.cmd.colorscheme('base16-atlas')
