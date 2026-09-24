@@ -4,7 +4,7 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 
 # Extend PATH with Go binaries
-export PATH=$PATH:$(go env GOPATH)/bin 
+export PATH=$PATH:$(go env GOPATH 2>/dev/null)/bin 
 
 # --- Oh My Zsh Plugins ---
 plugins=(
