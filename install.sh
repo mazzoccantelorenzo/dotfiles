@@ -42,6 +42,29 @@ else
 fi
 
 # --- Atuin Setup ---
+# 3. Install FiraCode Nerd Font
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    FONT_DIR="$HOME/Library/Fonts"
+else
+    FONT_DIR="$HOME/.local/share/fonts"
+fi
+
+if ! ls "$FONT_DIR"/*FiraCode*Nerd* >/dev/null 2>&1; then
+    echo "Installing FiraCode Nerd Font..."
+    mkdir -p "$FONT_DIR"
+    TMP_DIR=$(mktemp -d)
+    curl -fsSL "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip" -o "$TMP_DIR/FiraCode.zip"
+    unzip -q -o "$TMP_DIR/FiraCode.zip" -d "$FONT_DIR"
+    rm -rf "$TMP_DIR"
+    
+    if [[ "$OSTYPE" != "darwin"* ]]; then
+        if command -v fc-cache >/dev/null 2>&1; then
+            fc-cache -f "$FONT_DIR"
+        fi
+    fi
+else
+    echo "FiraCode Nerd Font is already installed."
+fi
 # Atuin: Shell history replacement
 mkdir -p "$HOME/.config/atuin"
 safe_link "$DOTFILES/atuin/config.toml" "$HOME/.config/atuin/config.toml"
