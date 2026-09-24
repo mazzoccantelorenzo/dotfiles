@@ -1,3 +1,4 @@
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 # --- Path & Environment ---
 # Standard Oh My Zsh path
 export ZSH="$HOME/.oh-my-zsh"
