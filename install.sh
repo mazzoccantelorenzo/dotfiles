@@ -22,6 +22,24 @@ safe_link() {
     ln -sf "$src" "$dst"
 }
 
+# --- Install Dependencies ---
+
+# 1. Install Oh My Zsh if it's missing
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo "Installing Oh My Zsh..."
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+else
+    echo "Oh My Zsh is already installed."
+fi
+
+# 2. Install Starship if it's missing
+if ! command -v starship >/dev/null 2>&1; then
+    echo "Installing Starship..."
+    curl -sS https://starship.rs/install.sh | sh -s -- -y
+else
+    echo "Starship is already installed."
+fi
+
 # --- Atuin Setup ---
 # Atuin: Shell history replacement
 mkdir -p "$HOME/.config/atuin"
