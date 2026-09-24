@@ -56,8 +56,8 @@ alias cf='change_font'
 
 
 # Added by Antigravity CLI installer
-export PATH="/home/loreenzo/.local/bin:$PATH"
-export PATH="/home/loreenzo/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Attivazione rapida del virtual environment
 alias activate="source .venv/bin/activate 2>/dev/null || source opusdesk/.venv/bin/activate 2>/dev/null || echo '❌ Nessun ambiente virtuale (.venv) trovato in questa cartella.'"
