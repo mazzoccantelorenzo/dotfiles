@@ -259,6 +259,27 @@ require("lazy").setup({
             { "<leader>ft", "<cmd>TodoTelescope<cr>", desc = "Find TODOs" },
         }
     },
+    {
+        "frabjous/knap",
+        keys = {
+            { "<leader>kp", function() require("knap").process_once() end, desc = "Knap Process Once" },
+            { "<leader>kc", function() require("knap").close_viewer() end, desc = "Knap Close Viewer" },
+            { "<leader>kt", function() require("knap").toggle_autopreviewing() end, desc = "Knap Toggle Autopreview" },
+        },
+        config = function()
+            vim.g.knap_settings = {
+                mdoutputext = "html",
+                mdtohtml = "pandoc --standalone %docroot% -o %outputfile%",
+                mdtohtmlviewerlaunch = "open -a Safari %outputfile%",
+                mdtohtmlviewerrefresh = "none",
+                mdtopdf = "pandoc %docroot% -o %outputfile%",
+                mdtopdfviewerlaunch = "open %outputfile%",
+                mdtopdfviewerrefresh = "none",
+                textopdfviewerlaunch = "open -a Preview %outputfile%",
+                textopdfviewerrefresh = "none",
+            }
+        end,
+    },
 })
 
 -- ========================================================================== --
