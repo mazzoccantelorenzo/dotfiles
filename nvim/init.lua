@@ -308,18 +308,3 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 vim.cmd.colorscheme('base16-atlas')
 
--- Leggi i PDF direttamente dentro Neovim come testo
-vim.api.nvim_create_autocmd("BufReadPre", {
-    pattern = "*.pdf",
-    callback = function()
-        vim.bo.readonly = true
-    end,
-})
-vim.api.nvim_create_autocmd("BufReadPost", {
-    pattern = "*.pdf",
-    callback = function()
-        vim.cmd("%!pdftotext " .. vim.fn.shellescape(vim.fn.expand("%")))
-        vim.bo.readonly = true
-        vim.bo.modifiable = false
-    end,
-})
