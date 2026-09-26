@@ -32,6 +32,8 @@ eval "$(starship init zsh)"
 # Atuin: Better shell history
 if [ -f "$HOME/.atuin/bin/env" ]; then
     . "$HOME/.atuin/bin/env"
+fi
+if command -v atuin >/dev/null 2>&1; then
     eval "$(atuin init zsh)"
 fi
 
@@ -61,5 +63,14 @@ alias cf='change_font'
 
 
 # Attivazione rapida del virtual environment
-alias activate="source .venv/bin/activate 2>/dev/null || source opusdesk/.venv/bin/activate 2>/dev/null || echo '❌ Nessun ambiente virtuale (.venv) trovato in questa cartella.'"
+alias activate="source .venv/bin/activate 2>/dev/null || source opusdesk/.venv/bin/activate 2>/dev/null || (command -v pipenv >/dev/null && pipenv --venv >/dev/null 2>&1 && source \$(pipenv --venv)/bin/activate) || echo '❌ Nessun ambiente virtuale trovato in questa cartella.'"
 alias venv="activate"
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/mazzoccante/.local/bin:$PATH"
+
+# Aggiunto per far funzionare pipenv
+export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+
+export PIPENV_IGNORE_VIRTUALENVS=1

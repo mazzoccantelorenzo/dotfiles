@@ -66,6 +66,13 @@ else
     echo "FiraCode Nerd Font is already installed."
 fi
 # Atuin: Shell history replacement
+if ! command -v atuin >/dev/null 2>&1; then
+    echo "Installing Atuin..."
+    curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+else
+    echo "Atuin is already installed."
+fi
+
 mkdir -p "$HOME/.config/atuin"
 safe_link "$DOTFILES/atuin/config.toml" "$HOME/.config/atuin/config.toml"
 
