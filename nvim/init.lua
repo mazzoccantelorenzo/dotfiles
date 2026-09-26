@@ -277,6 +277,10 @@ require("lazy").setup({
                 mdtopdfviewerrefresh = "none",
                 textopdfviewerlaunch = "open -a Preview %outputfile%",
                 textopdfviewerrefresh = "none",
+                typoutputext = "pdf",
+                typtopdf = "typst compile %docroot% %outputfile%",
+                typtopdfviewerlaunch = "open -a Preview %outputfile%",
+                typtopdfviewerrefresh = "none",
             }
         end,
     },
