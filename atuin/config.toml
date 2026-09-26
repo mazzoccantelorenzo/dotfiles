@@ -1,4 +1,4 @@
-search_mode = "fuzzy"                           # Search algorithm: prefix, fulltext, fuzzy, skim
+search_mode = "daemon-fuzzy"
 filter_mode = "directory"                       # Default scope: global, host, session, directory
 filter_mode_shell_up_key_binding = "directory"  # Scope when using up-arrow (same options as filter_mode)
 workspaces = true                               # Auto-filter to git repo when in one
@@ -54,5 +54,6 @@ scroll_exits = true                             # Up/down exits TUI at first/las
 strategy = "auto"                               # Preview height: auto (based on command) or static
 
 [daemon]
-enabled = false                                 # Run `atuin daemon` for background sync
+enabled = true
 sync_frequency = 300                            # Daemon sync interval in seconds
+autostart = true
