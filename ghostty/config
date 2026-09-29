@@ -68,3 +68,7 @@ keybind = ctrl+7=goto_tab:7
 keybind = ctrl+8=goto_tab:8
 keybind = ctrl+9=goto_tab:9
 keybind = ctrl+w=close_tab
+
+# Send Command+Up/Down to terminal applications for lgit file navigation.
+keybind = super+arrow_up=csi:1;5A
+keybind = super+arrow_down=csi:1;5B
