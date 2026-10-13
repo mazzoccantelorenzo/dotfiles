@@ -63,6 +63,7 @@ vim.keymap.set("n", "<S-h>", "<cmd>tabprevious<CR>", { desc = "Previous Tab" })
 for i = 1, 9 do
     vim.keymap.set("n", "<S-" .. i .. ">", "<cmd>tabnext " .. i .. "<CR>", { desc = "Go to Tab " .. i })
     vim.keymap.set("n", "<leader>" .. i, "<cmd>tabnext " .. i .. "<CR>", { desc = "Go to Tab " .. i })
+    vim.keymap.set("n", "<M-" .. i .. ">", "<cmd>tabnext " .. i .. "<CR>", { desc = "Go to Tab " .. i })
 end
 
 -- File Explorer & Search
