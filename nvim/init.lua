@@ -327,23 +327,59 @@ require("lazy").setup({
             }
         end,
     },
-    -- Python Plugins
+    -- Debugging (DAP)
     {
-        "mfussenegger/nvim-dap-python",
+        "mfussenegger/nvim-dap",
         dependencies = {
-            "mfussenegger/nvim-dap",
+            "rcarriga/nvim-dap-ui",
+            "nvim-neotest/nvim-nio",
             "williamboman/mason.nvim",
             "jay-babu/mason-nvim-dap.nvim",
         },
         config = function()
+            local dap = require("dap")
+            local dapui = require("dapui")
+
+            dapui.setup()
+
+            -- Automatically open/close DAP UI
+            dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
+            dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
+            dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
+
+            -- Keybindings
+            vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle Breakpoint" })
+            vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Debug Continue / Start" })
+            vim.keymap.set("n", "<leader>do", dap.step_over, { desc = "Step Over" })
+            vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "Step Into" })
+            vim.keymap.set("n", "<leader>dO", dap.step_out, { desc = "Step Out" })
+            vim.keymap.set("n", "<leader>dt", dap.terminate, { desc = "Terminate Debugger" })
+            vim.keymap.set("n", "<leader>du", dapui.toggle, { desc = "Toggle DAP UI" })
+        end,
+    },
+    {
+        "leoluz/nvim-dap-go",
+        ft = "go",
+        dependencies = { "mfussenegger/nvim-dap" },
+        config = function()
+            require("dap-go").setup()
+            vim.keymap.set("n", "<leader>dgt", function() require("dap-go").debug_test() end, { desc = "Debug Go Test" })
+            vim.keymap.set("n", "<leader>dgl", function() require("dap-go").debug_last_test() end, { desc = "Debug Last Go Test" })
+        end,
+    },
+    {
+        "mfussenegger/nvim-dap-python",
+        dependencies = {
+            "mfussenegger/nvim-dap",
+            "jay-babu/mason-nvim-dap.nvim",
+        },
+        config = function()
             require("mason-nvim-dap").setup({
-                ensure_installed = { "python" },
+                ensure_installed = { "python", "delve" },
                 handlers = {},
             })
             local path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
             require("dap-python").setup(path)
-            vim.keymap.set("n", "<leader>db", function() require("dap").toggle_breakpoint() end, { desc = "Toggle Breakpoint" })
-            vim.keymap.set("n", "<leader>dc", function() require("dap").continue() end, { desc = "Debug Continue" })
         end,
     },
     {
