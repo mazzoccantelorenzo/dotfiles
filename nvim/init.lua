@@ -363,7 +363,19 @@ require("lazy").setup({
         dependencies = { "mfussenegger/nvim-dap" },
         config = function()
             require("dap-go").setup()
-            vim.keymap.set("n", "<leader>dgt", function() require("dap-go").debug_test() end, { desc = "Debug Go Test" })
+            vim.keymap.set("n", "<leader>dgt", function()
+                local file = vim.fn.expand("%")
+                if file:match("_test%.go$") then
+                    require("dap-go").debug_test()
+                else
+                    local test_file = file:gsub("%.go$", "_test.go")
+                    if vim.fn.filereadable(test_file) == 1 then
+                        require("neotest").run.run({ test_file, strategy = "dap" })
+                    else
+                        require("dap-go").debug_test()
+                    end
+                end
+            end, { desc = "Debug Go Test" })
             vim.keymap.set("n", "<leader>dgl", function() require("dap-go").debug_last_test() end, { desc = "Debug Last Go Test" })
         end,
     },
