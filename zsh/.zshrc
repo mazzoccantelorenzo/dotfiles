@@ -1,11 +1,14 @@
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
 # --- Path & Environment ---
 # Standard Oh My Zsh path
 export ZSH="$HOME/.oh-my-zsh"
 
 # Extend PATH with Go binaries
 export PATH=$PATH:$(go env GOPATH 2>/dev/null)/bin 
+export EDITOR="nvim"
+export VISUAL="nvim" 
 
 # --- Oh My Zsh Plugins ---
 plugins=(
@@ -40,6 +43,7 @@ fi
 # --- Keybindings & Settings ---
 # Set interrupt key to Ctrl-K
 stty intr ^K
+bindkey '^Q' beginning-of-line
 
 # --- Aliases ---
 # Git: Cleanup local branches that are 'gone' on the remote

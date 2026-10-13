@@ -51,7 +51,7 @@ font-family = "JetBrainsMono Nerd Font"
 font-size = 18
 command = "/bin/zsh"
 click-repeat-interval = 500
-auto-update-channel = "stable"
+auto-update-channel = "tip"
 keybind = ctrl+c=copy_to_clipboard
 keybind = ctrl+v=paste_from_clipboard
 keybind = alt+d=goto_split:next
@@ -69,6 +69,11 @@ keybind = ctrl+8=goto_tab:8
 keybind = ctrl+9=goto_tab:9
 keybind = ctrl+w=close_tab
 
-# Send Command+Up/Down to terminal applications for lgit file navigation.
-keybind = super+arrow_up=csi:1;5A
-keybind = super+arrow_down=csi:1;5B
+# Send Shift+Up/Down to terminal applications for lgit file navigation.
+keybind = shift+arrow_up=csi:1;2A
+keybind = shift+arrow_down=csi:1;2B
+
+# Word deletion with Ctrl+Backspace and Ctrl+Delete
+keybind = ctrl+backspace=text:\x17
+keybind = ctrl+delete=text:\x1bd
+

@@ -33,6 +33,14 @@ vim.diagnostic.config({
 -- ========================================================================== --
 -- Navigation
 vim.keymap.set({'n', 'v', 'o'}, 'q', 'b', { noremap = true, desc = "Move back a word" })
+vim.keymap.set({'n', 'i', 'v'}, '<C-q>', function()
+    if vim.api.nvim_get_mode().mode == 'i' then
+        vim.cmd('normal! 0')
+        vim.cmd('startinsert')
+    else
+        vim.cmd('normal! 0')
+    end
+end, { desc = "Beginning of line" })
 vim.keymap.set({'n', 'i', 'v'}, '<C-e>', function()
     if vim.api.nvim_get_mode().mode == 'i' then
         vim.cmd('normal! $')
@@ -42,11 +50,20 @@ vim.keymap.set({'n', 'i', 'v'}, '<C-e>', function()
     end
 end, { desc = "End of line" })
 
+-- Word deletion
+vim.keymap.set('i', '<C-BS>', '<C-w>', { desc = "Delete word backward" })
+
 -- Tabs/Workspaces
 vim.keymap.set("n", "<leader>tn", "<cmd>tabnew<CR>", { desc = "New Tab" })
 vim.keymap.set("n", "<leader>tc", "<cmd>tabclose<CR>", { desc = "Close Tab" })
 vim.keymap.set("n", "<S-tab>", "<cmd>tabnext<CR>", { desc = "Next Tab" })
 vim.keymap.set("n", "<S-h>", "<cmd>tabprevious<CR>", { desc = "Previous Tab" })
+
+-- Go to tab 1-9
+for i = 1, 9 do
+    vim.keymap.set("n", "<S-" .. i .. ">", "<cmd>tabnext " .. i .. "<CR>", { desc = "Go to Tab " .. i })
+    vim.keymap.set("n", "<leader>" .. i, "<cmd>tabnext " .. i .. "<CR>", { desc = "Go to Tab " .. i })
+end
 
 -- File Explorer & Search
 vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { silent = true, desc = "Toggle Tree" })
@@ -135,6 +152,7 @@ require("lazy").setup({
             require("bufferline").setup({
                 options = {
                     mode = "tabs",
+                    numbers = "ordinal",
                     separator_style = "thin",
                     show_buffer_close_icons = false,
                     show_close_icon = false,
@@ -190,12 +208,12 @@ require("lazy").setup({
         dependencies = { "williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim", "hrsh7th/cmp-nvim-lsp" },
         config = function()
             require("mason").setup({ ui = { border = "rounded" } })
-            require("mason-lspconfig").setup({ ensure_installed = { "clangd", "vtsls", "gopls", "lua_ls" } })
+            require("mason-lspconfig").setup({ ensure_installed = { "clangd", "vtsls", "gopls", "lua_ls", "pyright", "ruff" } })
             
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
             
             -- Use the new vim.lsp.config API
-            local servers = { "clangd", "vtsls", "gopls", "lua_ls" }
+            local servers = { "clangd", "vtsls", "gopls", "lua_ls", "pyright", "ruff" }
             for _, server in ipairs(servers) do
                 vim.lsp.config(server, {
                     capabilities = capabilities,
@@ -203,6 +221,19 @@ require("lazy").setup({
                 -- Start the server for the current buffer if it matches
                 vim.lsp.enable(server)
             end
+
+            -- Python specifics
+            vim.lsp.config("pyright", {
+                capabilities = capabilities,
+                settings = {
+                    pyright = { disableOrganizeImports = true },
+                    python = { analysis = { ignore = { '*' } } },
+                }
+            })
+            vim.lsp.config("ruff", {
+                capabilities = capabilities,
+            })
+
 
             -- Global keybindings for LSP
             vim.api.nvim_create_autocmd('LspAttach', {
@@ -237,7 +268,7 @@ require("lazy").setup({
                 configs = require("nvim-treesitter")
             end
             configs.setup({
-                ensure_installed = { 'lua', 'go', 'typescript', 'javascript', 'html', 'bash' },
+                ensure_installed = { 'lua', 'go', 'typescript', 'javascript', 'html', 'bash', 'python' },
                 highlight = { enable = true },
                 indent = { enable = true },
             })
@@ -247,6 +278,17 @@ require("lazy").setup({
     -- Git
     { "lewis6991/gitsigns.nvim", opts = { current_line_blame = true } },
     { "kdheepak/lazygit.nvim", keys = { { "<leader>lg", "<cmd>LazyGit<cr>" } } },
+
+    -- Markdown diagrams
+    {
+        "searleser97/mermaid-nvim",
+        ft = { "markdown" },
+        opts = { preview_mode = "float" },
+        keys = {
+            { "<leader>mp", "<cmd>MermaidFloat<cr>", desc = "Mermaid preview" },
+            { "<leader>mt", "<cmd>MermaidToggle<cr>", desc = "Toggle Mermaid source" },
+        },
+    },
 
     -- Utils
     { "folke/which-key.nvim", event = "VeryLazy", opts = {} },
@@ -284,6 +326,64 @@ require("lazy").setup({
             }
         end,
     },
+    -- Python Plugins
+    {
+        "mfussenegger/nvim-dap-python",
+        dependencies = {
+            "mfussenegger/nvim-dap",
+            "williamboman/mason.nvim",
+            "jay-babu/mason-nvim-dap.nvim",
+        },
+        config = function()
+            require("mason-nvim-dap").setup({
+                ensure_installed = { "python" },
+                handlers = {},
+            })
+            local path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
+            require("dap-python").setup(path)
+            vim.keymap.set("n", "<leader>db", function() require("dap").toggle_breakpoint() end, { desc = "Toggle Breakpoint" })
+            vim.keymap.set("n", "<leader>dc", function() require("dap").continue() end, { desc = "Debug Continue" })
+        end,
+    },
+    {
+        "linux-cultist/venv-selector.nvim",
+        dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim", "mfussenegger/nvim-dap-python" },
+        opts = { name = { "venv", ".venv", "env", ".env" }, auto_refresh = false },
+        keys = { { "<leader>vs", "<cmd>VenvSelect<cr>", desc = "Select VirtualEnv" } },
+    },
+    {
+        "nvim-neotest/neotest",
+        dependencies = {
+            "nvim-neotest/nvim-nio",
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-neotest/neotest-python",
+            "fredrikaverpil/neotest-golang",
+        },
+        config = function()
+            require("neotest").setup({
+                adapters = {
+                    require("neotest-python")({ dap = { justMyCode = false } }),
+                    require("neotest-golang")({
+                        runner = "gotestsum",
+                    }),
+                }
+            })
+            vim.keymap.set("n", "<leader>tr", function() require("neotest").run.run() end, { desc = "Run Test" })
+            vim.keymap.set("n", "<leader>tf", function()
+                local file = vim.fn.expand("%")
+                if not file:match("_test%.go$") and file:match("%.go$") then
+                    local test_file = file:gsub("%.go$", "_test.go")
+                    if vim.fn.filereadable(test_file) == 1 then
+                        file = test_file
+                    end
+                end
+                require("neotest").run.run(file)
+            end, { desc = "Run Test File" })
+            vim.keymap.set("n", "<leader>to", function() require("neotest").output_panel.toggle() end, { desc = "Toggle Test Output" })
+        end,
+    },
+
 })
 
 -- ========================================================================== --
@@ -296,7 +396,7 @@ require("carbon").setup()
 -- ========================================================================== --
 -- Format on save for Go/TS/JS
 vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = { "*.go", "*.ts", "*.tsx", "*.js", "*.jsx" },
+    pattern = { "*.go", "*.ts", "*.tsx", "*.js", "*.jsx", "*.py" },
     callback = function()
         vim.lsp.buf.format({ async = false })
     end,
@@ -311,4 +411,3 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 vim.cmd.colorscheme('base16-atlas')
-
